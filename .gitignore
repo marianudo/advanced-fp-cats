@@ -1,0 +1,13 @@
+# Build files
+target/
+
+# Vim files
+*.swp
+
+# IntelliJ files
+*.ipr
+*.iws
+.idea/
+
+# MacOSX files
+.DS_Store
