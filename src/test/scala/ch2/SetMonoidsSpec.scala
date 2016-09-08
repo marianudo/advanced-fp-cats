@@ -1,6 +1,6 @@
 package ch2
 
-import ch2.Monoid.{testAssociativity, testIdentity}
+import ch2.Monoid.{checkAssociativity, checkIdentity}
 import org.scalatest.FunSpec
 
 /**
@@ -9,11 +9,11 @@ import org.scalatest.FunSpec
 class SetMonoidsSpec extends FunSpec {
 
     def assertAssociativity(implicit monoid: Monoid[Set[Int]]): Unit = {
-        assert(testAssociativity(Set(1), Set(2), Set(3)))
+        assert(checkAssociativity(Set(1), Set(2), Set(3)))
     }
 
     def assertIdentity(implicit monoid: Monoid[Set[Int]]): Unit = {
-        assert(testIdentity(Set(3, 4, 5)))
+        assert(checkIdentity(Set(3, 4, 5)))
     }
 
     describe("A Set Monoid") {

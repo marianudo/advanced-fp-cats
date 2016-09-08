@@ -14,13 +14,13 @@ trait Monoid[T] extends Semigroup[T] {
 object Monoid {
     def apply[T](implicit monoid: Monoid[T]) = monoid
 
-    def testAssociativity[T](x: T, y: T, z: T)(implicit monoid: Monoid[T]): Boolean = {
+    def checkAssociativity[T](x: T, y: T, z: T)(implicit monoid: Monoid[T]): Boolean = {
         val _b1 = monoid.combine(x, monoid.combine(y, z))
         val _b2 = monoid.combine(monoid.combine(x, y), z)
         _b1 == _b2
     }
 
-    def testIdentity[T](x: T)(implicit monoid: Monoid[T]): Boolean = {
+    def checkIdentity[T](x: T)(implicit monoid: Monoid[T]): Boolean = {
         monoid.combine(x, monoid.empty) == x
     }
 }

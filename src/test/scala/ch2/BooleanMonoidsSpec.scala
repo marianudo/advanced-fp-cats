@@ -1,6 +1,6 @@
 package ch2
 
-import ch2.Monoid.{testAssociativity, testIdentity}
+import ch2.Monoid.{checkAssociativity, checkIdentity}
 import org.scalatest.{FunSpec, Matchers}
 
 /**
@@ -9,18 +9,18 @@ import org.scalatest.{FunSpec, Matchers}
 class BooleanMonoidsSpec extends FunSpec with Matchers {
 
     def assertAssociativity(implicit monoid: Monoid[Boolean]): Unit = {
-        testAssociativity(true, true, true) shouldBe true
-        testAssociativity(true, false, true) shouldBe true
-        testAssociativity(true, true, false) shouldBe true
-        testAssociativity(false, true, true) shouldBe true
-        testAssociativity(false, false, true) shouldBe true
-        testAssociativity(false, true, false) shouldBe true
-        testAssociativity(false, false, false) shouldBe true
+        checkAssociativity(true, true, true) shouldBe true
+        checkAssociativity(true, false, true) shouldBe true
+        checkAssociativity(true, true, false) shouldBe true
+        checkAssociativity(false, true, true) shouldBe true
+        checkAssociativity(false, false, true) shouldBe true
+        checkAssociativity(false, true, false) shouldBe true
+        checkAssociativity(false, false, false) shouldBe true
     }
 
     def assertIdentity(implicit monoid: Monoid[Boolean]): Unit = {
-        testIdentity(true) shouldBe true
-        testIdentity(false) shouldBe true
+        checkIdentity(true) shouldBe true
+        checkIdentity(false) shouldBe true
     }
 
     describe("A Boolean And monoid") {
