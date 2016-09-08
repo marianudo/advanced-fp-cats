@@ -1,33 +1,26 @@
 package ch2
 
-import org.scalatest.FunSpec
+import ch2.Monoid.{testAssociativity, testIdentity}
+import org.scalatest.{FunSpec, Matchers}
 
 /**
   *
   */
-class BooleanMonoidsSpec extends FunSpec {
+class BooleanMonoidsSpec extends FunSpec with Matchers {
 
-    def assertAssociativity(monoid: Monoid[Boolean]): Unit = {
-        def testAssociativity(b1: Boolean, b2: Boolean, b3: Boolean): Boolean = {
-            val _b1 = monoid.combine(b1, monoid.combine(b2, b3))
-            val _b2 = monoid.combine(monoid.combine(b1, b2), b3)
-            _b1 === _b2
-        }
-
-        assert(testAssociativity(true, true, true))
-        assert(testAssociativity(true, false, true))
-        assert(testAssociativity(true, true, false))
-        assert(testAssociativity(false, true, true))
-        assert(testAssociativity(false, false, true))
-        assert(testAssociativity(false, true, false))
-        assert(testAssociativity(false, false, false))
+    def assertAssociativity(implicit monoid: Monoid[Boolean]): Unit = {
+        testAssociativity(true, true, true) shouldBe true
+        testAssociativity(true, false, true) shouldBe true
+        testAssociativity(true, true, false) shouldBe true
+        testAssociativity(false, true, true) shouldBe true
+        testAssociativity(false, false, true) shouldBe true
+        testAssociativity(false, true, false) shouldBe true
+        testAssociativity(false, false, false) shouldBe true
     }
 
     def assertIdentity(implicit monoid: Monoid[Boolean]): Unit = {
-        def testIdentity(b: Boolean)(implicit monoid: Monoid[Boolean]): Boolean = monoid.combine(b, monoid.empty)
-
-        assert(testIdentity(true))
-        assert(!testIdentity(false))
+        testIdentity(true) shouldBe true
+        testIdentity(false) shouldBe true
     }
 
     describe("A Boolean And monoid") {
