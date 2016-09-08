@@ -26,3 +26,15 @@ object BooleanOrMonoid extends Monoid[Boolean] {
 
     override def combine(x: Boolean, y: Boolean): Boolean = x || y
 }
+
+object BooleanXorMonoid extends Monoid[Boolean] {
+    override def empty: Boolean = false
+
+    override def combine(x: Boolean, y: Boolean): Boolean = (x && !y) || (!x && y)
+}
+
+object BooleanXnorMonoid extends Monoid[Boolean] {
+    override def empty: Boolean = true
+
+    override def combine(x: Boolean, y: Boolean): Boolean = (!x || y) && (x || !y)
+}

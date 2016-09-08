@@ -49,4 +49,24 @@ class BooleanMonoidsSpec extends FunSpec {
             assertIdentity(BooleanOrMonoid)
         }
     }
+
+    describe("A Boolean XOR monoid") {
+        it("obeys the associativity rule") {
+            assertAssociativity(BooleanXorMonoid)
+        }
+
+        it("Obeys the identity element rule") {
+            assertIdentity(BooleanXorMonoid)
+        }
+    }
+
+    describe("A boolean XNOR monod") {
+        it("obeys the associativity rule") {
+            assertAssociativity(BooleanXnorMonoid)
+        }
+
+        it("Obeys the identity element rule") {
+            assertIdentity(BooleanXnorMonoid)
+        }
+    }
 }
