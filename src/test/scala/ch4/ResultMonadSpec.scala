@@ -1,10 +1,8 @@
 package ch4
 
-import org.scalatest.{FlatSpec, Matchers}
-
-import cats.syntax.functor._
 import cats.syntax.flatMap._
-import cats.syntax.applicative._
+import cats.syntax.functor._
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
   *
