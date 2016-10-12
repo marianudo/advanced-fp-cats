@@ -1,4 +1,6 @@
-import scala.concurrent.Future
+import cats.Applicative
+
+import scala.concurrent.Await
 import scala.language.higherKinds
 import scala.util.Random
 
@@ -24,36 +26,36 @@ object MonolithicProgram {
 
 MonolithicProgram.run()
 
-trait Applicative[F[_]] {
-    def pure[A](a: A): F[A]
-}
-
-trait Monad[F[_]] extends Applicative[F] {
-    final def flatMap[A, B](a: A)(fx: A => F[B]): F[B] = fx(a)
-
-    def map[A, B](a: A)(fx: A => B): F[B] =
-        flatMap(a)(a => pure(fx(a)))
-}
-
-object Monad {
-    object FutureMonad extends Monad[Future] {
-        override def pure[A](a: A): Future[A] = Future successful a
-    }
-
-    object OptionMonad extends Monad[Option] {
-        override def pure[A](a: A): Option[A] = Some(a)
-    }
-
-    implicit class MonadSyntax[F[_], T](n: T) {
-        def flatMap[B](fx: T => F[B])(implicit monad: Monad[F]): F[B] =
-            monad.flatMap(n)(fx)
-
-        def pure(t: T)(implicit monad: Monad[F]): F[T] = monad.pure(t)
-
-        def map[B](fx: T => B)(implicit monad: Monad[F]): F[B] = monad.map(n)(fx)
-
-    }
-}
+//trait Applicative[F[_]] {
+//    def pure[A](a: A): F[A]
+//}
+//
+//trait Monad[F[_]] extends Applicative[F] {
+//    final def flatMap[A, B](a: A)(fx: A => F[B]): F[B] = fx(a)
+//
+//    def map[A, B](a: A)(fx: A => B): F[B] =
+//        flatMap(a)(a => pure(fx(a)))
+//}
+//
+//object Monad {
+//    object FutureMonad extends Monad[Future] {
+//        override def pure[A](a: A): Future[A] = Future successful a
+//    }
+//
+//    object OptionMonad extends Monad[Option] {
+//        override def pure[A](a: A): Option[A] = Some(a)
+//    }
+//
+//    implicit class MonadSyntax[F[_], T](n: T) {
+//        def flatMap[B](fx: T => F[B])(implicit monad: Monad[F]): F[B] =
+//            monad.flatMap(n)(fx)
+//
+//        def pure(t: T)(implicit monad: Monad[F]): F[T] = monad.pure(t)
+//
+//        def map[B](fx: T => B)(implicit monad: Monad[F]): F[B] = monad.map(n)(fx)
+//
+//    }
+//}
 
 trait ModularCalc[F[_]] {
     def generateVal(): F[Int]
@@ -73,7 +75,8 @@ class ModularCalcImpl[F[_]](implicit monad: Applicative[F]) extends ModularCalc[
 object ModularProgram {
     def run() = {
 
-        implicit val monad = Monad.OptionMonad
+        import cats.instances.future._
+        import scala.concurrent.ExecutionContext.Implicits.global
 
         val calc = new ModularCalcImpl
 
@@ -87,5 +90,5 @@ object ModularProgram {
 val eventualResult = ModularProgram.run()
 println("After run()")
 
-//import scala.concurrent.duration._
-//Await.result(eventualResult, 3.seconds)
+import scala.concurrent.duration._
+Await.result(eventualResult, 3.seconds)
