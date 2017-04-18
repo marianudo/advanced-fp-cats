@@ -7,11 +7,13 @@ import org.scalatest.prop.Checkers
 class BooleanOrMonoidSpec extends FlatSpec with Checkers
   with AssociativityChecker[Boolean] {
 
+  implicit val monoid: Monoid[Boolean] = BooleanOrMonoid
+
   "Combine operations" should "be associative" in {
-      check(checkAssociativity(BooleanOrMonoid))
+      check(checkAssociativity)
   }
 
   "Empty element properties" should "hold" in {
-      check(checkEmptyElementProperties(BooleanOrMonoid))
+      check(checkEmptyElementProperties)
   }
 }

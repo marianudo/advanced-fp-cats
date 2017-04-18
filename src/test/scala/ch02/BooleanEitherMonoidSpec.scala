@@ -8,11 +8,13 @@ import Monoid.BooleanEitherMonoid
 class BooleanEitherMonoidSpec extends FlatSpec with Checkers
   with AssociativityChecker[Boolean] {
 
+  implicit val monoid: Monoid[Boolean] = BooleanEitherMonoid
+
   "Combine operations" should "be associative" in {
-      check(checkAssociativity(BooleanEitherMonoid))
+      check(checkAssociativity)
   }
 
   "Empty element properties" should "hold" in {
-      check(checkEmptyElementProperties(BooleanEitherMonoid))
+      check(checkEmptyElementProperties)
   }
 }
