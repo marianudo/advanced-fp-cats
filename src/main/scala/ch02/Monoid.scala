@@ -16,4 +16,10 @@ object Monoid {
 
     val empty = true
   }
+
+  object BooleanOrMonoid extends Monoid[Boolean] {
+    def combine(b1: Boolean, b2: Boolean): Boolean = b1 || b2
+
+    val empty = false
+  }
 }
