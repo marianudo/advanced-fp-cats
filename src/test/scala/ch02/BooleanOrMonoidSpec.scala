@@ -1,18 +1,12 @@
 package ch02
 
 import org.scalatest.FlatSpec
-import org.scalatest.Matchers
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import Monoid._
+import Monoid.BooleanOrMonoid
 import BooleanOrMonoid._
 
-class BooleanOrMonoidSpec extends FlatSpec with GeneratorDrivenPropertyChecks with Matchers {
+class BooleanOrMonoidSpec extends FlatSpec with AssociativityChecker {
   "Combine operations" should "be associative" in {
-    forAll {
-      (b1: Boolean, b2: Boolean, b3: Boolean) => {
-        combine(b1, combine(b2, b3)) should be (combine(combine(b1, b2), b3))
-      }
-    }
+    checkAssociativity(BooleanOrMonoid)
   }
 
   "Empty element properties" should "hold" in {
