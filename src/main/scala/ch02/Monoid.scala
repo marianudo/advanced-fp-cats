@@ -35,4 +35,11 @@ object Monoid {
 
     val empty = false
   }
+
+  object BooleanXnorMonoid extends Monoid[Boolean] {
+    def combine(b1: Boolean, b2: Boolean): Boolean =
+      (!b1 || b2) && (b1 || !b2)
+
+    val empty = true
+  }
 }
