@@ -19,10 +19,8 @@ class BooleanOrMonoidSpec extends FlatSpec with GeneratorDrivenPropertyChecks wi
     forAll {
       (b: Boolean) => {
         assert(
-          combine(b, BooleanOrMonoid.empty) === combine(BooleanOrMonoid.empty, b)
-        )
-        assert(
-          combine(b, BooleanOrMonoid.empty) === b
+          combine(b, BooleanOrMonoid.empty) == b &&
+          combine(BooleanOrMonoid.empty, b) == b
         )
       }
     }

@@ -19,10 +19,8 @@ class BooleanAndMonoidSpec extends FlatSpec with GeneratorDrivenPropertyChecks w
     forAll {
       (b: Boolean) => {
         assert(
-          combine(b, BooleanAndMonoid.empty) === combine(BooleanAndMonoid.empty, b)
-        )
-        assert(
-          combine(b, BooleanAndMonoid.empty) === b
+          combine(b, BooleanAndMonoid.empty) == b &&
+          combine(BooleanAndMonoid.empty, b) == b
         )
       }
     }
