@@ -2,13 +2,16 @@ package ch02
 
 import org.scalatest.FlatSpec
 import Monoid.BooleanAndMonoid
+import org.scalatest.prop.Checkers
 
-class BooleanAndMonoidSpec extends FlatSpec with AssociativityChecker {
+class BooleanAndMonoidSpec extends FlatSpec with Checkers
+  with AssociativityChecker[Boolean] {
+
   "Combine operations" should "be associative" in {
-    checkAssociativity(BooleanAndMonoid)
+    check(checkAssociativity(BooleanAndMonoid))
   }
 
   "Empty element properties" should "hold" in {
-    checkEmptyElementProperties(BooleanAndMonoid)
+    check(checkEmptyElementProperties(BooleanAndMonoid))
   }
 }
