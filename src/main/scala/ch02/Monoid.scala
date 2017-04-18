@@ -4,6 +4,12 @@ trait Semigroup[A] {
   def combine(x: A, y: A): A
 }
 
+object Semigroup {
+  object BooleanXORSemigroup extends Semigroup[Boolean] {
+    def combine(b1: Boolean, b2: Boolean): Boolean = b1 ^ b2
+  }
+}
+
 trait Monoid[A] extends Semigroup[A] {
   def empty: A
 }
