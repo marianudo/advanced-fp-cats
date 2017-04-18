@@ -9,13 +9,6 @@ class BooleanAndMonoidSpec extends FlatSpec with AssociativityChecker {
   }
 
   "Empty element properties" should "hold" in {
-    forAll {
-      (b: Boolean) => {
-        assert(
-          BooleanAndMonoid.combine(b, BooleanAndMonoid.empty) == b &&
-          BooleanAndMonoid.combine(BooleanAndMonoid.empty, b) == b
-        )
-      }
-    }
+    checkEmptyElementProperties(BooleanAndMonoid)
   }
 }

@@ -10,4 +10,13 @@ trait AssociativityChecker extends GeneratorDrivenPropertyChecks with Matchers {
       semigroup.combine(b1, semigroup.combine(b2, b3)) should be (semigroup.combine(semigroup.combine(b1, b2), b3))
     }
   }
+
+  def checkEmptyElementProperties(implicit monoid: Monoid[Boolean]) = forAll {
+    (b: Boolean) => {
+      assert(
+        monoid.combine(b, monoid.empty) == b &&
+        monoid.combine(monoid.empty, b) == b
+      )
+    }
+  }
 }

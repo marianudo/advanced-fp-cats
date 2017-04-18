@@ -10,13 +10,6 @@ class BooleanOrMonoidSpec extends FlatSpec with AssociativityChecker {
   }
 
   "Empty element properties" should "hold" in {
-    forAll {
-      (b: Boolean) => {
-        assert(
-          combine(b, BooleanOrMonoid.empty) == b &&
-          combine(BooleanOrMonoid.empty, b) == b
-        )
-      }
-    }
+    checkEmptyElementProperties(BooleanOrMonoid)
   }
 }
