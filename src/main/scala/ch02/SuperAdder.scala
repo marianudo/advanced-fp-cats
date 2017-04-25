@@ -17,4 +17,8 @@ object SuperAdder {
 
     genericCombine(items)
   }
+
+  case class Order(totalCost: Double, quantity: Double)
+
+  def addUpOrders(orders: Seq[Order]): Order = ???
 }
