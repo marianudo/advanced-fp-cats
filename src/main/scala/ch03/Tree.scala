@@ -21,15 +21,7 @@ object Tree {
     }
   }
 
-  implicit object LeafFunctor extends Functor[Leaf] {
-    override def map[A, B](fa: Leaf[A])(f: (A) => B): Leaf[B] = Leaf(f(fa.value))
-  }
+  def branch[A](l: Tree[A], r: Tree[A]): Tree[A] = Branch(l, r)
 
-  implicit object BranchFunctor extends Functor[Branch] {
-    override def map[A, B](fa: Branch[A])(f: (A) => B): Branch[B] =
-      Branch(
-        fa.left.map(f),
-        fa.right.map(f)
-      )
-  }
+  def leaf[A](value: A): Tree[A] = Leaf(value)
 }
