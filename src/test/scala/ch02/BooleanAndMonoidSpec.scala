@@ -17,3 +17,4 @@ class BooleanAndMonoidSpec extends FlatSpec with Checkers
     check(checkEmptyElementProperties)
   }
 }
+
