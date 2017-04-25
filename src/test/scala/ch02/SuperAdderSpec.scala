@@ -21,4 +21,10 @@ class SuperAdderSpec extends FlatSpec with Checkers with AssociativityChecker[In
     import cats.instances.string._
     assert(genericCombine(List("a", "b", "c")) == "abc")
   }
+
+  "A list of optional ints" should "combine as expected" in {
+    import ch02.SuperAdder.addMaybes
+
+    assert(addMaybes(List(Some(2), Some(4), None, Some(4))).contains(10))
+  }
 }
