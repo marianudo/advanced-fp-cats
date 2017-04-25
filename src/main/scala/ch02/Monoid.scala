@@ -48,4 +48,8 @@ object Monoid {
 
     override def combine(x: Set[T], y: Set[T]): Set[T] = x ++ y
   }
+
+  class SetIntersectionSemigroup[T] extends Semigroup[Set[T]] {
+    override def combine(x: Set[T], y: Set[T]): Set[T] = x.intersect(y)
+  }
 }
