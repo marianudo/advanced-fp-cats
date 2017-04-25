@@ -8,4 +8,8 @@ object SuperAdder {
 
     items.foldLeft(Monoid[Int].empty)(_ |+| _)
   }
+
+  def genericCombine[T](items: Seq[T])(implicit monoid: cats.Monoid[T]) = {
+    items.foldLeft(monoid.empty)(monoid.combine)
+  }
 }
