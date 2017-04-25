@@ -1,13 +1,13 @@
 package ch02
 
-import ch02.Monoid.SetConcatMonoid
+import ch02.Monoid.SetUnionMonoid
 import org.scalatest.FunSpec
 import org.scalatest.prop.Checkers
 
-class SetConcatMonoidSpec extends FunSpec with Checkers {
+class SetUnionMonoidSpec extends FunSpec with Checkers {
 
   describe("A set of strings") {
-    implicit val monoid: Monoid[Set[String]] = new SetConcatMonoid[String]
+    implicit val monoid: Monoid[Set[String]] = new SetUnionMonoid[String]
 
     val propertiesChecker = new AssociativityChecker[Set[String]] {}
 
@@ -23,7 +23,7 @@ class SetConcatMonoidSpec extends FunSpec with Checkers {
   describe("A Set of ints") {
     val propertiesChecker = new AssociativityChecker[Set[Int]] {}
 
-    implicit val monoid: Monoid[Set[Int]] = new SetConcatMonoid[Int]
+    implicit val monoid: Monoid[Set[Int]] = new SetUnionMonoid[Int]
 
     it("fulfils the associativity property") {
       check(propertiesChecker.checkAssociativity)

@@ -43,7 +43,7 @@ object Monoid {
     val empty = true
   }
 
-  class SetConcatMonoid[T] extends Monoid[Set[T]] {
+  class SetUnionMonoid[T] extends Monoid[Set[T]] {
     override def empty: Set[T] = Set.empty[T]
 
     override def combine(x: Set[T], y: Set[T]): Set[T] = x ++ y
