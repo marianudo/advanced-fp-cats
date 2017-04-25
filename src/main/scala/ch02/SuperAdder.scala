@@ -20,5 +20,20 @@ object SuperAdder {
 
   case class Order(totalCost: Double, quantity: Double)
 
-  def addUpOrders(orders: Seq[Order]): Order = ???
+  implicit object OrderMonoid extends cats.Monoid[Order] {
+    override def empty: Order = Order(0.0, 0.0)
+
+    import cats.instances.double._
+    import cats.syntax.monoid._
+
+    override def combine(x: Order, y: Order): Order =
+      Order(
+        x.totalCost |+| y.totalCost,
+        x.quantity |+| y.quantity
+      )
+  }
+
+  def addUpOrders(orders: Seq[Order]): Order = {
+    genericCombine(orders)
+  }
 }
