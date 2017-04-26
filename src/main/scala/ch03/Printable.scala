@@ -12,16 +12,26 @@ trait Printable[A] {
   }
 }
 
+object Printable {
+  def format[A](value: A)(implicit printable: Printable[A]): String =
+    printable.format(value)
+}
+
 object PrintableInstances {
-  implicit val stringPrintable =
+  implicit val stringPrintable: Printable[String] =
     new Printable[String] {
       def format(value: String): String =
         "\"" + value + "\""
     }
 
-  implicit val booleanPrintable =
+  implicit val booleanPrintable: Printable[Boolean] =
     new Printable[Boolean] {
       def format(value: Boolean): String =
         if(value) "yes" else "no"
     }
+
+  implicit def boxPrintable[A](implicit printableB: Printable[A]): Printable[Box[A]] =
+    printableB.contramap(_.value)
 }
+
+final case class Box[A](value: A)
