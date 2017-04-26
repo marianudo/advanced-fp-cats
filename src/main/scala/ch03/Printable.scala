@@ -30,8 +30,8 @@ object PrintableInstances {
         if(value) "yes" else "no"
     }
 
-  implicit def boxPrintable[A](implicit printableB: Printable[A]): Printable[Box[A]] =
-    printableB.contramap(_.value)
+  implicit def boxPrintable[A](implicit printableA: Printable[A]): Printable[Box[A]] =
+    printableA.contramap(_.value)
 }
 
 final case class Box[A](value: A)
