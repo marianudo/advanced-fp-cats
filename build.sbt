@@ -11,5 +11,5 @@ libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.12.1" % "test" withSources() withJavadoc(),
 
   // Cats
-   "org.typelevel" %% "cats-core" % "0.7.2" withSources()
+   "org.typelevel" %% "cats-core" % "0.9.0" withSources()
 )
