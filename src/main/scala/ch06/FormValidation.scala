@@ -15,8 +15,8 @@ object FormValidation {
   def getValue(name: String)(formData: FormData): ErrorsOr[String] =
     formData.get(name).toRight(List(s"Parameter $name is not part of form data"))
 
-  def parseInt(name: String)(formData: FormData): ErrorsOr[Int] =
-    getValue(name)(formData)
+  def parseInt(value: String): ErrorsOr[Int] =
+    value.asRight
       .flatMap(s => Either.catchOnly[NumberFormatException](s.toInt))
       .leftMap(_ => List("Cannot convert data to Int"))
 
@@ -36,7 +36,8 @@ object FormValidation {
 
   def readAge(name: String) (parameters: FormData): Either[List[String], Int] =
     for {
-      i <- parseInt(name)(parameters)
+      v <- getValue(name)(parameters)
+      i <- parseInt(v)
       n <- nonNegative(i)
     } yield n
 }
