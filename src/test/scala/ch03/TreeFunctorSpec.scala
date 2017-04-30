@@ -2,7 +2,6 @@ package ch03
 
 import org.scalatest.FlatSpec
 
-import cats.syntax.functor._
 import ch03.Tree._
 
 class TreeFunctorSpec extends FlatSpec {

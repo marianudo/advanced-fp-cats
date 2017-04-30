@@ -1,6 +1,5 @@
 package ch03
 
-import cats.Functor
 import cats.syntax.functor._
 
 sealed trait Tree[+A]
