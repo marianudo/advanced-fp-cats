@@ -28,16 +28,26 @@ object FormValidation {
     i.asRight
       .ensure(List("Age should be not negative"))(_ >= 0)
 
-  def readName(name: String)(formData: FormData): ErrorsOr[String] =
+  def readName(formData: FormData): ErrorsOr[String] =
     for {
-      value <- getValue(name)(formData)
+      value <- getValue("name")(formData)
       nb <- nonBlank(value)
     } yield nb
 
-  def readAge(name: String) (parameters: FormData): Either[List[String], Int] =
+  def readAge(parameters: FormData): Either[List[String], Int] =
     for {
-      v <- getValue(name)(parameters)
+      v <- getValue("age")(parameters)
       i <- parseInt(v)
       n <- nonNegative(i)
     } yield n
+
+//  import cats.Cartesian
+//  import cats.instances.vector._
+//  import cats.instances.string._
+//
+//  def readUser(data: FormData): AllErrorsOr[User] =
+//    Cartesian[AllErrorsOr].product(
+//      readName(data).toValidated,
+//      readAge(data).toValidated
+//    ).map(User.tupled)
 }
