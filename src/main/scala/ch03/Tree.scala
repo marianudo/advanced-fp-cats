@@ -1,7 +1,5 @@
 package ch03
 
-import cats.syntax.functor._
-
 sealed trait Tree[+A]
 
 final case class Branch[A](left: Tree[A], right: Tree[A])
