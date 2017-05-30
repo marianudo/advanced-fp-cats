@@ -37,7 +37,7 @@ object DataValidation {
 
   object WithValidated {
 
-    sealed trait Check[E, A] {
+    sealed trait Predicate[E, A] {
 
       def apply(a: A)(implicit sg: Semigroup[E]): Validated[E, A] =
         this match {
@@ -55,15 +55,15 @@ object DataValidation {
             }
         }
 
-      def and(that: Check[E, A]): Check[E, A] = And(this, that)
+      def and(that: Predicate[E, A]): Predicate[E, A] = And(this, that)
 
-      def or(that: Check[E, A]): Check[E, A] = Or(this, that)
+      def or(that: Predicate[E, A]): Predicate[E, A] = Or(this, that)
     }
 
-    case class And[E, A](left: Check[E, A], right: Check[E, A]) extends Check[E, A]
+    case class And[E, A](left: Predicate[E, A], right: Predicate[E, A]) extends Predicate[E, A]
 
-    case class Pure[E, A](fx: A => Validated[E, A]) extends Check[E, A]
+    case class Pure[E, A](fx: A => Validated[E, A]) extends Predicate[E, A]
 
-    case class Or[E, A](left: Check[E, A], right: Check[E, A]) extends Check[E, A]
+    case class Or[E, A](left: Predicate[E, A], right: Predicate[E, A]) extends Predicate[E, A]
   }
 }
