@@ -7,7 +7,8 @@ import cats.syntax.either._
 import cats.syntax.cartesian._
 
 object DataValidation {
-//  type Check[E, A] = A => Either[E, A]
+
+  //  type Check[E, A] = A => Either[E, A]
 
   object WithEither {
 
@@ -34,20 +35,15 @@ object DataValidation {
   }
 
   object WithValidated {
+
     sealed trait Check[E, A] {
 
       def apply(a: A)(implicit sg: Semigroup[E]): Validated[E, A] =
         this match {
           case Pure(fx) => fx(a)
           case And(left, right) =>
-            (left(a) |@| right(a)).map {
-              (t1, t2) => {
-                println(t1)
-                println(t2)
-                a
-              }
-            }
-          }
+            (left(a) |@| right(a)).map((_, _) => a)
+        }
 
       def and(that: Check[E, A]): Check[E, A] = And(this, that)
     }
