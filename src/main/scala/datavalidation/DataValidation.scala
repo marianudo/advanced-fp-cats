@@ -2,6 +2,7 @@ package datavalidation
 
 import cats.Semigroup
 import cats.data.Validated
+import cats.data.Validated.{Invalid, Valid}
 import cats.syntax.semigroup._
 import cats.syntax.either._
 import cats.syntax.cartesian._
@@ -41,15 +42,28 @@ object DataValidation {
       def apply(a: A)(implicit sg: Semigroup[E]): Validated[E, A] =
         this match {
           case Pure(fx) => fx(a)
+
           case And(left, right) =>
             (left(a) |@| right(a)).map((_, _) => a)
+
+          case Or(left, right) =>
+            (left(a), right(a)) match {
+              case (Valid(_), Valid(_)) => Valid(a)
+              case (Invalid(l), Valid(_)) => Valid(a)
+              case (Valid(_), Invalid(r)) => Valid(a)
+              case (Invalid(l), Invalid(r)) => Invalid(l |+| r)
+            }
         }
 
       def and(that: Check[E, A]): Check[E, A] = And(this, that)
+
+      def or(that: Check[E, A]): Check[E, A] = Or(this, that)
     }
 
     case class And[E, A](left: Check[E, A], right: Check[E, A]) extends Check[E, A]
 
     case class Pure[E, A](fx: A => Validated[E, A]) extends Check[E, A]
+
+    case class Or[E, A](left: Check[E, A], right: Check[E, A]) extends Check[E, A]
   }
 }
