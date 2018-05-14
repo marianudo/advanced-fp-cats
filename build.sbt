@@ -20,4 +20,6 @@ libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.12.1" % "test" withSources() withJavadoc()
 ) ++ catsDependencies
 
+addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.4")
+
 initialCommands in console := "import ch04.FreeMonad.KeyValueDsl._"
